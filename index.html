@@ -1,0 +1,1563 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Thanutti Khantahat — Digital Transformation & Data Analytics Engineer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  /* LIGHT THEME VARIABLES */
+  --bg: #F8FAFC;
+  --bg2: #F1F5F9;
+  --surface: #FFFFFF;
+  --surface2: #F8FAFC;
+  --border: #E2E8F0;
+  --border2: #CBD5E1;
+  
+  --accent: #2563EB; /* Bright Blue */
+  --accent2: #4F46E5; /* Indigo */
+  --accent3: #059669; /* Emerald */
+  --amber: #D97706;
+  
+  --text: #475569;
+  --text2: #64748B;
+  --heading: #0F172A; /* Dark slate for titles */
+  
+  --terminal-bg: #0A0F1E; /* Keep terminals dark for contrast */
+  
+  --mono: 'Space Mono', monospace;
+  --sans: 'Outfit', sans-serif;
+  --r: 16px;
+}
+html{scroll-behavior:smooth;overflow-x:hidden}
+body{font-family:var(--sans);background:var(--bg);color:var(--text);overflow-x:hidden}
+
+/* ── NOISE LAYER ── */
+body::after{
+  content:'';position:fixed;inset:0;pointer-events:none;z-index:9000;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+  opacity:0.04;
+}
+
+/* ── SCROLLBAR ── */
+::-webkit-scrollbar{width:6px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--border2);border-radius:4px}
+::-webkit-scrollbar-thumb:hover{background:var(--accent)}
+
+/* ── NAV ── */
+#topnav{
+  position:fixed;top:0;left:0;right:0;z-index:500;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:16px 60px;
+  transition:all .4s;
+}
+#topnav.scrolled{
+  background:rgba(255,255,255,0.9);
+  backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--border);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.03);
+}
+.nav-logo{
+  font-family:var(--mono);font-size:1rem;font-weight:800;
+  color:var(--heading);text-decoration:none;letter-spacing:-.02em;
+  display:flex;align-items:center;gap:8px;
+}
+.nav-logo .agi-tag{
+  font-size:.6rem;background:linear-gradient(135deg,var(--accent),var(--accent2));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  font-weight:800;letter-spacing:.12em;
+}
+.nav-links{display:flex;align-items:center;gap:32px}
+.nav-link{
+  font-size:.8rem;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--text);text-decoration:none;font-weight:700;
+  transition:color .2s;position:relative;
+}
+.nav-link::after{content:'';position:absolute;bottom:-4px;left:0;width:0;height:2px;background:var(--accent);transition:width .3s}
+.nav-link:hover{color:var(--heading)}.nav-link:hover::after{width:100%}
+.btn-nav{
+  font-family:var(--mono);font-size:.72rem;font-weight:700;letter-spacing:.06em;
+  text-transform:uppercase;padding:10px 22px;border-radius:8px;
+  background:linear-gradient(135deg,var(--accent),var(--accent2));
+  color:#FFF;text-decoration:none;border:none;cursor:pointer;
+  transition:all .3s;box-shadow:0 4px 15px rgba(37,99,235,0.2);
+}
+.btn-nav:hover{transform:translateY(-2px);box-shadow:0 8px 25px rgba(37,99,235,0.3)}
+#hamburger{display:none;background:none;border:none;color:var(--heading);font-size:1.4rem;cursor:pointer}
+#mobile-menu{display:none;position:fixed;inset:0;z-index:1000;background:var(--surface);flex-direction:column;align-items:center;justify-content:center;gap:32px}
+#mobile-menu.open{display:flex}
+#close-btn{position:absolute;top:24px;right:24px;background:none;border:none;color:var(--heading);font-size:1.8rem;cursor:pointer}
+.m-link{font-family:var(--mono);font-size:1.8rem;font-weight:700;color:var(--heading);text-decoration:none;transition:color .2s}
+.m-link:hover{color:var(--accent)}
+
+/* ── HERO ── */
+#hero{
+  position:relative;min-height:100vh;display:flex;align-items:center;
+  overflow:hidden;padding-top:90px;
+}
+
+/* Animated grid */
+.hero-grid{
+  position:absolute;inset:0;z-index:1;
+  background-image:
+    linear-gradient(rgba(37,99,235,.04) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(37,99,235,.04) 1px,transparent 1px);
+  background-size:48px 48px;
+  mask-image:radial-gradient(ellipse at 60% 40%, black 15%, transparent 65%);
+  animation:gridScroll 25s linear infinite;
+}
+@keyframes gridScroll{0%{background-position:0 0}100%{background-position:48px 48px}}
+
+/* Glow orbs - Lighter */
+.orb{position:absolute;border-radius:50%;filter:blur(90px);pointer-events:none}
+.orb1{width:600px;height:600px;background:rgba(37,99,235,.15);top:-100px;right:-150px;animation:orbFloat 8s ease-in-out infinite}
+.orb2{width:400px;height:400px;background:rgba(79,70,229,.1);bottom:-80px;left:-100px;animation:orbFloat 10s ease-in-out infinite reverse}
+.orb3{width:300px;height:300px;background:rgba(5,150,105,.08);top:40%;left:30%;animation:orbFloat 12s ease-in-out infinite}
+@keyframes orbFloat{0%,100%{transform:translate(0,0)}50%{transform:translate(20px,-30px)}}
+
+.hero-content{
+  position:relative;z-index:3;
+  padding:0 80px;max-width:1280px;width:100%;margin:0 auto;
+  display:grid;grid-template-columns:1fr 420px;gap:80px;align-items:center;
+}
+
+/* AGI Label */
+.agi-label{
+  display:inline-flex;align-items:center;gap:10px;
+  font-family:var(--mono);font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--accent);margin-bottom:24px;
+  padding:6px 14px;border-radius:20px;
+  border:1px solid rgba(37,99,235,.2);
+  background:rgba(37,99,235,.05);
+  font-weight: 700;
+}
+.agi-dot{width:6px;height:6px;border-radius:50%;background:var(--accent);animation:pulse 2s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.7)}}
+
+h1{
+  font-family:var(--sans);font-weight:900;
+  font-size:clamp(3rem,6vw,5.5rem);
+  color:var(--heading);line-height:1.05;
+  letter-spacing:-.04em;margin-bottom:10px;
+}
+.h1-sub{
+  font-family:var(--mono);font-size:clamp(1rem,1.8vw,1.4rem);
+  background:linear-gradient(135deg,var(--accent) 0%,var(--accent2) 100%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  letter-spacing:-.01em;margin-bottom:28px;display:block;
+  font-weight: 700;
+}
+.hero-desc{
+  font-size:1.05rem;color:var(--text);line-height:1.8;max-width:500px;margin-bottom:40px;font-weight:400;
+}
+.hero-desc .loc{
+  display:inline-flex;align-items:center;gap:8px;
+  font-family:var(--mono);font-size:.75rem;color:var(--text2);
+  margin-top:16px; font-weight: 700;
+}
+.hero-btns{display:flex;flex-wrap:wrap;gap:16px}
+.btn-p{
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  padding:14px 28px;border-radius:12px;
+  font-family:var(--sans);font-weight:700;font-size:.85rem;letter-spacing:.03em;text-transform:uppercase;
+  text-decoration:none;
+  background:linear-gradient(135deg,var(--accent),var(--accent2));
+  color:#FFF;transition:all .3s;
+  box-shadow:0 8px 25px rgba(37,99,235,.25);
+}
+.btn-p:hover{transform:translateY(-3px);box-shadow:0 12px 30px rgba(37,99,235,.35)}
+.btn-g{
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  padding:14px 28px;border-radius:12px;
+  font-family:var(--sans);font-weight:700;font-size:.85rem;letter-spacing:.03em;text-transform:uppercase;
+  text-decoration:none;
+  background:var(--surface);color:var(--heading);
+  border:1px solid var(--border2);
+  transition:all .3s; box-shadow:0 4px 10px rgba(0,0,0,0.02);
+}
+.btn-g:hover{background:var(--surface2);border-color:var(--accent);transform:translateY(-3px); color:var(--accent);}
+
+/* Hero right — Data terminal card (Keep it dark for contrast) */
+.hero-terminal{
+  background:var(--terminal-bg);
+  border:1px solid rgba(255,255,255,0.1);
+  border-radius:16px;
+  overflow:hidden;
+  box-shadow:0 20px 50px rgba(0,0,0,.15), 0 0 0 4px rgba(37,99,235,0.05);
+}
+.terminal-bar{
+  display:flex;align-items:center;gap:8px;
+  padding:12px 16px;
+  background:rgba(255,255,255,.05);
+  border-bottom:1px solid rgba(255,255,255,0.1);
+}
+.t-dot{width:10px;height:10px;border-radius:50%}
+.t-dot.r{background:#FF5F56}.t-dot.y{background:#FFBD2E}.t-dot.g{background:#27C93F}
+.t-title{font-family:var(--mono);font-size:.68rem;color:#94A3B8;margin-left:8px;letter-spacing:.05em}
+.terminal-body{padding:20px 22px;font-family:var(--mono);font-size:.72rem;line-height:1.9}
+.t-line{display:flex;gap:10px}
+.t-prompt{color:#34D399;user-select:none}
+.t-cmd{color:#F0F6FF}
+.t-out{color:#94A3B8;padding-left:18px}
+.t-out.hi{color:#38BDF8}
+.t-out.hi2{color:#818CF8}
+.t-out.hi3{color:#34D399}
+.t-out.amber{color:#FBBF24}
+.t-cursor{
+  display:inline-block;width:7px;height:13px;
+  background:#38BDF8;margin-left:2px;vertical-align:text-bottom;
+  animation:blink .9s step-end infinite
+}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
+
+.scroll-hint{
+  position:absolute;bottom:36px;left:80px;z-index:3;
+  display:flex;align-items:center;gap:12px;
+  font-family:var(--mono);font-size:.65rem;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--text2); font-weight:700;
+}
+.scroll-line{width:40px;height:2px;background:linear-gradient(to right,var(--accent),transparent)}
+
+/* ── SECTIONS ── */
+section{padding:120px 60px;position:relative;z-index:5}
+.inner{max-width:1280px;margin:0 auto}
+h2{
+  font-family:var(--sans);font-weight:900;
+  font-size:clamp(2rem,4vw,3.2rem);
+  color:var(--heading);line-height:1.1;letter-spacing:-.025em;
+}
+.sec-label{
+  font-family:var(--mono);font-size:.7rem;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--accent);margin-bottom:12px;display:block; font-weight: 700;
+}
+
+/* ── CARD ── */
+.card{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:var(--r);padding:32px;
+  box-shadow:0 10px 30px rgba(0,0,0,.03);
+  transition:all .3s ease;
+  position:relative;overflow:hidden;
+}
+.card:hover{
+  border-color:var(--border2);transform:translateY(-4px);
+  box-shadow:0 20px 40px rgba(0,0,0,.06),0 0 0 1px rgba(37,99,235,.05);
+}
+.card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:3px;
+  background:linear-gradient(90deg,transparent,var(--accent),var(--accent2),transparent);
+  transform:scaleX(0);transform-origin:left;transition:transform .4s ease;
+}
+.card:hover::before{transform:scaleX(1)}
+
+/* ── ABOUT ── */
+#about{background:linear-gradient(180deg,var(--bg) 0%,var(--bg2) 100%)}
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:start}
+.about-p{line-height:1.85;margin-bottom:18px;font-size:1rem;color:var(--text)}
+
+.tag-row{display:flex;flex-wrap:wrap;gap:10px;margin-top:28px}
+.tag{
+  padding:6px 16px;border-radius:8px;
+  background:var(--surface);border:1px solid var(--border2);
+  font-family:var(--mono);font-size:.7rem;color:var(--text);font-weight:700;
+  transition:all .2s;cursor:default; box-shadow:0 2px 5px rgba(0,0,0,.02);
+}
+.tag:hover{background:var(--accent);border-color:var(--accent);color:#FFF;transform:translateY(-2px)}
+
+/* Stats column */
+.stats-col{display:flex;flex-direction:column;gap:16px}
+.stat-card{
+  background:var(--surface);border:1px solid var(--border);border-radius:14px;
+  padding:24px 28px;display:flex;align-items:center;gap:22px;
+  transition:all .3s; box-shadow:0 4px 15px rgba(0,0,0,.02);
+}
+.stat-card:hover{border-color:var(--accent);background:var(--surface2);transform:translateX(6px)}
+.stat-icon{
+  width:52px;height:52px;border-radius:12px;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;font-size:1.2rem;
+}
+.si-blue{background:rgba(37,99,235,.1);color:var(--accent)}
+.si-green{background:rgba(5,150,105,.1);color:var(--accent3)}
+.si-purple{background:rgba(79,70,229,.1);color:var(--accent2)}
+.si-amber{background:rgba(217,119,6,.1);color:var(--amber)}
+.stat-num{
+  font-family:var(--mono);font-weight:800;font-size:1.8rem;
+  color:var(--heading);line-height:1;margin-bottom:6px;
+}
+.stat-desc{font-size:.85rem;color:var(--text2);line-height:1.5;font-weight:500}
+
+/* Skills section */
+.skills-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:16px}
+.skill-block{
+  background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:24px;
+  transition:all .3s; box-shadow:0 4px 15px rgba(0,0,0,.02);
+}
+.skill-block:hover{border-color:var(--accent2);transform:translateY(-3px)}
+.skill-cat{
+  font-family:var(--mono);font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--accent2);margin-bottom:12px;display:block; font-weight:700;
+}
+.skill-list{font-size:.85rem;color:var(--text);line-height:1.8}
+
+/* ── EDUCATION ── */
+#education{background:var(--bg)}
+.edu-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:52px}
+
+.edu-card{
+  background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:32px;
+  position:relative;overflow:hidden;transition:all .3s; box-shadow:0 8px 25px rgba(0,0,0,.03);
+}
+.edu-card:hover{border-color:var(--border2);transform:translateY(-4px);box-shadow:0 16px 40px rgba(0,0,0,.08)}
+.edu-card::after{
+  content:'';position:absolute;bottom:0;left:0;right:0;height:3px;
+  background:linear-gradient(90deg,var(--accent),var(--accent2));
+  transform:scaleX(0);transform-origin:left;transition:transform .4s;
+}
+.edu-card:hover::after{transform:scaleX(1)}
+
+.edu-yr{
+  font-family:var(--mono);font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--accent3);margin-bottom:14px;display:inline-flex;align-items:center;gap:10px; font-weight:700;
+}
+.edu-yr::before{content:'';display:block;width:20px;height:2px;background:var(--accent3)}
+.edu-title{font-family:var(--sans);font-weight:800;font-size:1.1rem;color:var(--heading);margin-bottom:6px}
+.edu-school{font-family:var(--mono);font-size:.8rem;color:var(--accent);margin-bottom:12px; font-weight:700;}
+.edu-desc{font-size:.9rem;color:var(--text2);line-height:1.7}
+
+/* Courses mini cards */
+.courses-col{display:flex;flex-direction:column;gap:12px}
+.course-item{
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:10px;padding:16px 20px;transition:all .3s; box-shadow:0 2px 8px rgba(0,0,0,.02);
+}
+.course-item:hover{border-color:var(--accent2);transform:translateX(6px); background:var(--surface2);}
+.course-org{font-family:var(--mono);font-size:.7rem;color:var(--accent2);letter-spacing:.05em;text-transform:uppercase;margin-bottom:4px; font-weight:700;}
+.course-name{font-size:.9rem;color:var(--heading);font-weight:600}
+
+/* ── EXPERIENCE ── */
+#experience{background:linear-gradient(180deg,var(--bg) 0%,var(--bg2) 100%)}
+.exp-stack{display:flex;flex-direction:column;gap:32px;margin-top:56px}
+
+.exp-card{
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:20px;overflow:hidden;
+  box-shadow:0 10px 30px rgba(0,0,0,.04);
+  transition:all .4s ease;
+}
+.exp-card:hover{border-color:var(--border2);box-shadow:0 25px 60px rgba(0,0,0,.08);transform:translateY(-4px)}
+
+.exp-inner{display:grid;grid-template-columns:1fr 440px}
+.exp-card:nth-child(even) .exp-inner{direction:rtl}
+.exp-card:nth-child(even) .exp-inner>*{direction:ltr}
+
+.exp-body{padding:48px;display:flex;flex-direction:column;gap:0; justify-content: space-between;}
+.exp-meta-row{display:flex;align-items:center;gap:14px;margin-bottom:20px;flex-wrap:wrap}
+.exp-num{
+  font-family:var(--mono);font-size:2.5rem;font-weight:800;
+  color:var(--border2);line-height:1;user-select:none; opacity: 0.5;
+}
+.exp-badge{
+  font-family:var(--mono);font-size:.65rem;letter-spacing:.08em;text-transform:uppercase;
+  padding:6px 14px;border-radius:8px;font-weight:700;
+}
+.badge-blue{background:rgba(37,99,235,.1);color:var(--accent);border:1px solid rgba(37,99,235,.2)}
+.badge-purple{background:rgba(79,70,229,.1);color:var(--accent2);border:1px solid rgba(79,70,229,.2)}
+.badge-green{background:rgba(5,150,105,.1);color:var(--accent3);border:1px solid rgba(5,150,105,.2)}
+.badge-amber{background:rgba(217,119,6,.1);color:var(--amber);border:1px solid rgba(217,119,6,.2)}
+
+.exp-title{
+  font-family:var(--sans);font-weight:900;font-size:1.6rem;
+  color:var(--heading);line-height:1.2;margin-bottom:16px;
+}
+.exp-desc{font-size:.95rem;line-height:1.8;color:var(--text);margin-bottom:28px}
+.exp-desc strong{color:var(--heading);font-weight:700}
+.exp-desc b{color:var(--accent);font-weight:700}
+
+.metrics{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:24px}
+.metric{
+  display:inline-flex;align-items:center;gap:8px;
+  background:var(--surface2);border:1px solid var(--border);
+  border-radius:8px;padding:8px 14px;
+  font-family:var(--mono);font-size:.75rem;font-weight:700;color:var(--text);
+}
+.metric i{color:var(--accent);font-size:.8rem}
+
+/* ── AI BUTTON ── */
+.ai-btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:10px;
+  padding:12px 24px;border-radius:10px;border:none;cursor:pointer;
+  font-family:var(--mono);font-size:.75rem;font-weight:800;letter-spacing:.05em;text-transform:uppercase;
+  color:#FFF;
+  background:linear-gradient(135deg,var(--accent),var(--accent2));
+  box-shadow: 0 4px 15px rgba(37,99,235,.2);
+  transition:all .3s;align-self:flex-start;
+  position:relative;overflow:hidden;
+}
+.ai-btn::after{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,var(--accent2),var(--accent));
+  opacity:0;transition:opacity .3s;
+}
+.ai-btn:hover{transform:translateY(-2px);box-shadow:0 8px 25px rgba(37,99,235,.35);}
+.ai-btn:hover::after{opacity:1}
+.ai-btn>*{position:relative;z-index:1}
+.ai-btn .spark{font-size:.9rem;animation:sparkSpin 3s linear infinite}
+@keyframes sparkSpin{0%{transform:rotate(0deg) scale(1)}50%{transform:rotate(180deg) scale(1.2)}100%{transform:rotate(360deg) scale(1)}}
+
+/* Exp Visual (Keep Dark Mode for contrast) */
+.exp-visual{
+  position:relative;overflow:hidden;min-height:340px;
+  background:var(--terminal-bg);
+  display:flex;align-items:center;justify-content:center;
+  cursor: zoom-in; /* Indicate zoomable */
+}
+.exp-visual img{
+  width:100%;height:100%;object-fit:cover;
+  opacity:.5;transition:opacity .5s,transform .6s cubic-bezier(0.25,1,0.5,1);
+}
+.exp-visual::after {
+  content: '\f00e'; /* FontAwesome magnify */
+  font-family: "Font Awesome 6 Free"; font-weight: 900;
+  position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0.5);
+  font-size: 3rem; color: #FFF; opacity: 0; transition: all 0.3s ease;
+  z-index: 10; text-shadow: 0 4px 20px rgba(0,0,0,0.5);
+}
+.exp-card:hover .exp-visual img{opacity:.8;transform:scale(1.05)}
+.exp-card:hover .exp-visual::after { opacity: 0.7; transform: translate(-50%, -50%) scale(1); }
+
+.dash-bar{
+  display:flex;align-items:center;gap:6px;
+  background:rgba(10,15,30,.8);border-radius:8px 8px 0 0;
+  padding:10px 14px;border-bottom:1px solid rgba(255,255,255,.1);
+  backdrop-filter:blur(10px);
+}
+.db{width:10px;height:10px;border-radius:50%}
+.db.r{background:#FF5F56}.db.y{background:#FFBD2E}.db.g{background:#27C93F}
+.dash-title{font-family:var(--mono);font-size:.65rem;color:#94A3B8;margin-left:8px; font-weight:600;}
+
+/* ── LIGHTBOX ZOOM ── */
+#lightbox-overlay {
+  position: fixed; inset: 0; z-index: 3000;
+  background: rgba(15, 23, 42, 0.95);
+  backdrop-filter: blur(10px);
+  display: flex; align-items: center; justify-content: center;
+  opacity: 0; pointer-events: none; transition: opacity 0.3s ease;
+  padding: 24px;
+}
+#lightbox-overlay.open { opacity: 1; pointer-events: all; }
+#lightbox-close {
+  position: absolute; top: 24px; right: 32px;
+  background: none; border: none; color: #FFF;
+  font-size: 2.5rem; cursor: pointer; transition: transform 0.2s;
+  z-index: 3010;
+}
+#lightbox-close:hover { transform: scale(1.1); color: #38BDF8; }
+#lightbox-content {
+  width: 100%; max-width: 1000px;
+  position: relative;
+  transform: scale(0.95); transition: transform 0.4s cubic-bezier(0.34,1.56,0.64,1);
+  background: var(--terminal-bg);
+  border-radius: 16px; border: 1px solid rgba(255,255,255,0.1);
+  box-shadow: 0 30px 60px rgba(0,0,0,0.5);
+  overflow: hidden;
+}
+#lightbox-overlay.open #lightbox-content { transform: scale(1); }
+#lightbox-content > .dash-bar { border-radius: 0; position: relative; z-index: 5; }
+#lightbox-content > svg, #lightbox-content > img { width: 100%; height: auto; display: block; position: relative !important; z-index: 2 !important; padding:0 !important; }
+#lightbox-content > img { position: absolute !important; inset:0; opacity: 0.4; }
+
+/* ── AI MODAL ── */
+#ai-overlay{
+  position:fixed;inset:0;z-index:2000;
+  background:rgba(15,23,42,.6);backdrop-filter:blur(8px);
+  display:flex;align-items:center;justify-content:center;padding:24px;
+  opacity:0;pointer-events:none;transition:opacity .3s ease;
+}
+#ai-overlay.open{opacity:1;pointer-events:all}
+
+#ai-modal{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:24px;
+  max-width:660px;width:100%;
+  box-shadow:0 30px 80px rgba(0,0,0,.15);
+  transform:scale(.95) translateY(30px);
+  transition:transform .4s cubic-bezier(0.34,1.56,0.64,1);
+  overflow:hidden; position: relative; display: flex; flex-direction: column;
+}
+#ai-overlay.open #ai-modal{transform:scale(1) translateY(0)}
+
+.modal-top-bar{
+  display:flex;align-items:center;gap:8px;
+  padding:16px 24px;
+  background:var(--surface2);
+  border-bottom:1px solid var(--border);
+}
+.modal-bar-title{
+  font-family:var(--mono);font-size:.7rem;color:var(--text2);margin-left:8px;letter-spacing:.05em;flex:1; font-weight:700;
+}
+.modal-x{
+  width:32px;height:32px;border-radius:50%;
+  border:1px solid var(--border2);background:var(--surface);
+  color:var(--text);cursor:pointer;font-size:.9rem;
+  display:flex;align-items:center;justify-content:center;transition:all .2s;
+}
+.modal-x:hover{border-color:var(--accent);color:var(--accent); background:var(--surface2);}
+
+.modal-inner{ padding:36px; overflow-y: auto; }
+.modal-header-flex {
+  display: flex; justify-content: space-between; align-items: center;
+  margin-bottom: 24px; flex-wrap: wrap; gap: 12px;
+}
+.modal-ai-badge{
+  display:inline-flex;align-items:center;gap:8px;
+  font-family:var(--mono);font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--accent); background:rgba(37,99,235,.08);
+  border:1px solid rgba(37,99,235,.2); padding:6px 14px;border-radius:8px; font-weight: 700;
+}
+.modal-ai-badge .thinking-dot{
+  width:6px;height:6px;border-radius:50%;background:var(--accent);
+  animation:pulse 1.2s ease-in-out infinite;
+}
+
+.modal-proj-title{
+  font-family:var(--sans);font-weight:900;font-size:1.5rem;
+  color:var(--heading);margin-bottom:28px;line-height:1.3;
+}
+#modal-body{ min-height:140px; display:flex; flex-direction:column; gap:16px; }
+
+/* Loading shimmer */
+.shimmer-line{
+  height:12px;border-radius:6px;margin-bottom:12px;
+  background:linear-gradient(90deg,rgba(37,99,235,.05) 25%,rgba(37,99,235,.15) 50%,rgba(37,99,235,.05) 75%);
+  background-size:300% 100%;animation:shimmer 1.6s infinite;
+}
+.shimmer-line:nth-child(2){width:88%}
+.shimmer-line:nth-child(3){width:95%}
+.shimmer-line:nth-child(4){width:72%}
+
+/* Summary blocks */
+.s-block{
+  background:var(--surface); border:1px solid var(--border);
+  border-radius:12px; padding:20px 24px; box-shadow: 0 4px 15px rgba(0,0,0,.02);
+}
+.s-block:nth-child(1) .s-label { color: var(--accent); }
+.s-block:nth-child(2) .s-label { color: var(--accent2); }
+.s-block:nth-child(3) .s-label { color: var(--accent3); }
+.s-label{
+  font-family:var(--mono);font-size:.75rem;letter-spacing:.1em;text-transform:uppercase;
+  margin-bottom:12px; font-weight:800;
+}
+.s-text{font-size:1rem;line-height:1.8;color:var(--text)}
+
+.modal-foot{
+  padding:20px 36px;border-top:1px solid var(--border);
+  display:flex;align-items:center;justify-content:space-between;gap:12px;
+  background:var(--surface2);
+}
+.modal-note{font-family:var(--mono);font-size:.68rem;font-weight:700; color:var(--text2);display:flex;align-items:center;gap:8px}
+.modal-note i{color:var(--accent); font-size: .9rem;}
+.btn-close-modal{
+  font-family:var(--mono);font-size:.75rem;font-weight:800;letter-spacing:.05em;text-transform:uppercase;
+  padding:12px 28px;border-radius:8px;border:none;
+  background:var(--heading);color:#FFF;cursor:pointer;transition:all .2s;
+  box-shadow: 0 4px 10px rgba(0,0,0,.1);
+}
+.btn-close-modal:hover{background:var(--accent); transform:translateY(-2px); box-shadow: 0 6px 15px rgba(37,99,235,.2);}
+.t-blink{
+  display:inline-block;width:7px;height:.9em;
+  background:var(--accent);margin-left:2px;vertical-align:text-bottom;
+  animation:blink .7s step-end infinite;
+}
+
+/* ── CONTACT ── */
+#contact{background:var(--surface2);text-align:center; border-top: 1px solid var(--border);}
+.contact-inner{max-width:680px;margin:0 auto}
+.contact-inner p{color:var(--text);font-size:1.05rem;line-height:1.8;margin:20px 0 40px}
+.contact-btns{display:flex;flex-wrap:wrap;gap:16px;justify-content:center;}
+
+/* ── FOOTER ── */
+footer{border-top:1px solid var(--border);padding:40px 60px;background:var(--surface)}
+.foot-inner{max-width:1280px;margin:0 auto;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:20px}
+.foot-logo{font-family:var(--mono);font-weight:800;font-size:1.1rem;color:var(--heading)}
+.foot-logo .agi{
+  font-size:.6rem;margin-left:6px;letter-spacing:.12em;
+  background:linear-gradient(135deg,var(--accent),var(--accent2));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+}
+.foot-copy{font-family:var(--mono);font-size:.7rem;color:var(--text2);letter-spacing:.02em; font-weight: 700;}
+
+/* ── RESPONSIVE / MOBILE SUPERCHARGE ── */
+@media(max-width:960px){
+  .hero-content{grid-template-columns:1fr}
+  .hero-terminal{display:none}
+  .exp-inner{grid-template-columns:1fr;direction:ltr!important}
+  .exp-card:nth-child(even) .exp-inner>*{direction:ltr}
+  .exp-visual{min-height:240px;order:-1}
+  .about-grid{grid-template-columns:1fr;gap:40px}
+  .edu-grid{grid-template-columns:1fr}
+  .skills-grid{grid-template-columns:1fr}
+}
+
+@media(max-width:768px){
+  #topnav{padding:16px 24px}
+  .nav-links,.btn-nav{display:none}
+  #hamburger{display:block}
+  section{padding:80px 24px}
+  .hero-content{padding:0 24px}
+  footer{padding:32px 24px; flex-direction: column; text-align: center; gap: 16px;}
+  .scroll-hint{left:24px}
+  .exp-body{padding:32px 24px}
+  h1 { font-size: 2.5rem; }
+  
+  /* Mobile Contact Buttons */
+  .contact-btns { flex-direction: column; width: 100%; }
+  .contact-btns .btn-p, .contact-btns .btn-g { width: 100%; justify-content: center; }
+
+  /* Make AI Button full width and taller on mobile */
+  .ai-btn { 
+    width: 100%; 
+    padding: 16px 20px; 
+    font-size: .8rem; 
+    margin-top: 12px;
+  }
+
+  /* Native Bottom Sheet Modal UI for Mobile */
+  #ai-overlay {
+    align-items: flex-end;
+    padding: 0;
+  }
+  #ai-modal {
+    transform: translateY(100%);
+    margin: 0;
+    border-radius: 32px 32px 0 0;
+    max-height: 90vh; height: auto;
+    border-bottom: none;
+    box-shadow: 0 -10px 40px rgba(0,0,0,0.15);
+  }
+  #ai-modal::before {
+    content: ''; position: absolute; top: 12px; left: 50%;
+    transform: translateX(-50%); width: 48px; height: 5px;
+    border-radius: 3px; background: var(--border2); z-index: 10;
+  }
+  .modal-top-bar { display: none; }
+  .modal-inner { padding: 40px 24px 24px; flex: 1; }
+  .modal-proj-title { font-size: 1.3rem; }
+  .modal-foot { 
+    padding: 16px 24px; flex-direction: column; gap: 16px;
+    padding-bottom: env(safe-area-inset-bottom, 24px); 
+  }
+  .btn-close-modal { width: 100%; text-align: center; padding: 16px; }
+  
+  /* Lightbox mobile fix */
+  #lightbox-overlay { padding: 12px; }
+  #lightbox-close { top: 16px; right: 16px; background: rgba(0,0,0,0.5); border-radius: 50%; width: 40px; height: 40px; display:flex; align-items:center; justify-content:center; font-size: 1.5rem;}
+}
+</style>
+</head>
+<body>
+
+<div id="lightbox-overlay">
+  <button id="lightbox-close">✕</button>
+  <div id="lightbox-content"></div>
+</div>
+
+<div id="ai-overlay" role="dialog" aria-modal="true">
+  <div id="ai-modal">
+    <div class="modal-top-bar">
+      <div class="modal-dot r"></div>
+      <div class="modal-dot y"></div>
+      <div class="modal-dot g"></div>
+      <span class="modal-bar-title">thanutti_agi — system_analysis.exe</span>
+      <button class="modal-x" id="modal-x">✕</button>
+    </div>
+    <div class="modal-inner">
+      <div class="modal-header-flex">
+        <div class="modal-ai-badge">
+          <div class="thinking-dot"></div>
+          Thanutti AGI · Analyzing Project
+        </div>
+      </div>
+      <p class="modal-proj-title" id="modal-title"></p>
+      <div id="modal-body"></div>
+    </div>
+    <div class="modal-foot">
+      <span class="modal-note">
+        <i class="fa-solid fa-microchip"></i>
+        System Analysis Complete
+      </span>
+      <button class="btn-close-modal" id="modal-close">Close Overview</button>
+    </div>
+  </div>
+</div>
+
+<nav id="topnav">
+  <a href="#hero" class="nav-logo">
+    THANUTTI_
+    <span class="agi-tag">AGI</span>
+  </a>
+  <div class="nav-links">
+    <a href="#about"      class="nav-link">About</a>
+    <a href="#education"  class="nav-link">Education</a>
+    <a href="#experience" class="nav-link">Experience</a>
+  </div>
+  <a href="tel:0653535451" class="btn-nav">
+    <i class="fa-solid fa-phone"></i> 065 353 5451
+  </a>
+  <button id="hamburger"><i class="fa-solid fa-bars"></i></button>
+</nav>
+
+<div id="mobile-menu">
+  <button id="close-btn"><i class="fa-solid fa-xmark"></i></button>
+  <a href="#about"      class="m-link">About</a>
+  <a href="#education"  class="m-link">Education</a>
+  <a href="#experience" class="m-link">Experience</a>
+  <a href="tel:0653535451" class="m-link" style="color:var(--accent)"><i class="fa-solid fa-phone"></i> Call Now</a>
+</div>
+
+<section id="hero">
+  <div class="hero-grid"></div>
+  <div class="orb orb1"></div>
+  <div class="orb orb2"></div>
+  <div class="orb orb3"></div>
+
+  <div class="hero-content">
+    <div id="hleft">
+      <div class="agi-label">
+        <div class="agi-dot"></div>
+        Thanutti AGI · Digital Transformation · v2026
+      </div>
+      <h1 id="hname">Thanutti<br>Khantahat</h1>
+      <span class="h1-sub" id="hsub">Digital Transformation &amp; Data Analytics Engineer</span>
+      <p class="hero-desc" id="hdesc">
+        Turning factory machines into intelligent data systems. Specializing in Power BI, Power Apps, Excel VBA, and workflow automation to reduce downtime and maximize manufacturing efficiency.
+        <span class="loc"><i class="fa-solid fa-location-dot"></i> Bangkok, Thailand · Mattel | Maintenance &amp; Facilities</span>
+      </p>
+      <div class="hero-btns" id="hbtns">
+        <a href="#experience" class="btn-p">View Projects <i class="fa-solid fa-arrow-right"></i></a>
+        <a href="tel:0653535451" class="btn-g"><i class="fa-solid fa-phone"></i> 065 353 5451</a>
+      </div>
+    </div>
+
+    <div class="hero-terminal" id="hterm">
+      <div class="terminal-bar">
+        <div class="t-dot r"></div><div class="t-dot y"></div><div class="t-dot g"></div>
+        <span class="t-title">thanutti@agi:~$ profile --live</span>
+      </div>
+      <div class="terminal-body">
+        <div class="t-line"><span class="t-prompt">$</span><span class="t-cmd"> whoami</span></div>
+        <div class="t-line t-out hi">  Thanutti Khantahat (Knight)</div>
+        <br>
+        <div class="t-line"><span class="t-prompt">$</span><span class="t-cmd"> cat role.txt</span></div>
+        <div class="t-line t-out">  Digital Transformation &amp;</div>
+        <div class="t-line t-out hi2">  Data Analytics Engineer</div>
+        <br>
+        <div class="t-line"><span class="t-prompt">$</span><span class="t-cmd"> get --stats</span></div>
+        <div class="t-line t-out amber">  downtime_reduction: <span class="hi">71%</span></div>
+        <div class="t-line t-out amber">  machines_managed:   <span class="hi">1,400+</span></div>
+        <div class="t-line t-out amber">  records_per_year:   <span class="hi">60,000+</span></div>
+        <div class="t-line t-out amber">  time_saved_weekly:  <span class="hi">570 hrs</span></div>
+        <br>
+        <div class="t-line"><span class="t-prompt">$</span><span class="t-cmd"> ls skills/</span></div>
+        <div class="t-line t-out hi3">  PowerBI/ SQLServer/ VBA/</div>
+        <div class="t-line t-out hi3">  PowerApps/ PowerAutomate/</div>
+        <div class="t-line t-out hi3">  ETL/ DAX/ SharePoint/</div>
+        <br>
+        <div class="t-line"><span class="t-prompt">$</span><span class="t-cmd"> status<span class="t-cursor"></span></span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="scroll-hint" id="hscroll">
+    <div class="scroll-line"></div>
+    <span>Scroll to explore</span>
+  </div>
+</section>
+
+<section id="about">
+  <div class="inner">
+    <div class="about-grid">
+      <div id="ableft">
+        <span class="sec-label">// 01 — Profile Summary</span>
+        <h2 style="margin-bottom:22px">Bridging Machines<br>with <span style="background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent">Data Intelligence</span></h2>
+        <p class="about-p">
+          Hands-on experience in manufacturing operations, specializing in Power BI dashboards, Power Apps, and workflow automation to reduce downtime and improve maintenance efficiency.
+        </p>
+        <p class="about-p">
+          Currently working at <strong style="color:var(--accent)">Mattel</strong> as a Digital Transformation &amp; Data Analytics Engineer in the Maintenance &amp; Facilities Department, where I bridge industrial machines with intelligent data systems — turning raw operational data into decisions.
+        </p>
+
+        <div class="tag-row" id="abtags">
+          <span class="tag">Power BI</span>
+          <span class="tag">DAX</span>
+          <span class="tag">SQL Server</span>
+          <span class="tag">Power Query</span>
+          <span class="tag">Excel VBA</span>
+          <span class="tag">Power Apps</span>
+          <span class="tag">Power Automate</span>
+          <span class="tag">ETL/ELT Pipelines</span>
+          <span class="tag">MTBF / MTTR</span>
+          <span class="tag">KPI Development</span>
+        </div>
+      </div>
+
+      <div id="abright">
+        <div class="stats-col">
+          <div class="stat-card card">
+            <div class="stat-icon si-blue"><i class="fa-solid fa-stopwatch"></i></div>
+            <div><div class="stat-num">71%</div><div class="stat-desc">Changeover downtime reduction via VBA real-time monitoring</div></div>
+          </div>
+          <div class="stat-card card">
+            <div class="stat-icon si-amber"><i class="fa-solid fa-industry"></i></div>
+            <div><div class="stat-num">1,400+</div><div class="stat-desc">Production machines monitored across 80 equipment types</div></div>
+          </div>
+          <div class="stat-card card">
+            <div class="stat-icon si-green"><i class="fa-solid fa-database"></i></div>
+            <div><div class="stat-num">60K+</div><div class="stat-desc">Maintenance records tracked &amp; analyzed annually via Power BI</div></div>
+          </div>
+          <div class="stat-card card">
+            <div class="stat-icon si-purple"><i class="fa-solid fa-clock"></i></div>
+            <div><div class="stat-num">570 hrs</div><div class="stat-desc">Non-value-added coordination time eliminated per week</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top:60px" id="skills-block">
+      <span class="sec-label">// Technical Skills</span>
+      <div class="skills-grid" style="margin-top:20px">
+        <div class="skill-block card">
+          <span class="skill-cat">Business Intelligence &amp; Analytics</span>
+          <div class="skill-list">Power BI · DAX · Dashboard Development<br>Data Modeling · KPI Development (MTBF, MTTR)</div>
+        </div>
+        <div class="skill-block card">
+          <span class="skill-cat">Data &amp; ETL</span>
+          <div class="skill-list">SQL Server · SQL Query Development · Power Query<br>ETL/ELT Pipelines · Data Transformation</div>
+        </div>
+        <div class="skill-block card">
+          <span class="skill-cat">Automation &amp; Low-Code</span>
+          <div class="skill-list">Power Apps · Power Automate · Excel VBA<br>Visual Basic · Workflow Design</div>
+        </div>
+        <div class="skill-block card">
+          <span class="skill-cat">Enterprise Tools</span>
+          <div class="skill-list">SharePoint · Microsoft 365 · IoT Smart Factory<br>Data Engineering · System Architecture · MATLAB</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="education">
+  <div class="inner">
+    <span class="sec-label" id="edlbl">// 02 — Academic Background</span>
+    <h2 id="edh">Educational <span style="background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent">Foundation</span></h2>
+    <div class="edu-grid" style="margin-top:48px" id="edgrid">
+
+      <div class="edu-card card" id="ed1">
+        <span class="edu-yr">2023</span>
+        <div class="edu-title">Bachelor of Engineering (B.Eng.)</div>
+        <div class="edu-school">Electrical and Electronic Engineering</div>
+        <div class="edu-desc">Kasetsart University — Strong foundation in electrical systems, automation, control systems, and data acquisition that directly supports digital transformation work in manufacturing.</div>
+      </div>
+
+      <div class="edu-card card" id="ed2">
+        <span class="edu-yr">2024–Present</span>
+        <div class="edu-title">Digital Transformation &amp; Data Analytics Engineer</div>
+        <div class="edu-school">Mattel · Maintenance &amp; Facilities Department</div>
+        <div class="edu-desc">First professional role — applying engineering knowledge to real factory-scale operations, building analytics infrastructure from scratch across 1,400+ machines.</div>
+      </div>
+
+      <div style="grid-column:1/-1">
+        <span class="sec-label" style="margin-bottom:16px;display:block">// Courses &amp; Certifications</span>
+        <div class="courses-col">
+          <div class="course-item">
+            <div class="course-org">Microsoft</div>
+            <div class="course-name">Design Effective Reports in Power BI</div>
+          </div>
+          <div class="course-item">
+            <div class="course-org">MATLAB</div>
+            <div class="course-name">Data Processing and Visualization</div>
+          </div>
+          <div class="course-item">
+            <div class="course-org">Thai-Nichi Institute of Technology</div>
+            <div class="course-name">Kaizen IoT Smart Factory</div>
+          </div>
+          <div class="course-item">
+            <div class="course-org">TOEIC — CEFR B1 Intermediate</div>
+            <div class="course-name">Score: 615</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="experience">
+  <div class="inner">
+    <span class="sec-label" id="exlbl">// 03 — Work Experience &amp; Projects</span>
+    <h2 id="exh">Engineering <span style="background:linear-gradient(135deg,var(--accent3),var(--accent));-webkit-background-clip:text;-webkit-text-fill-color:transparent">Results</span> That Scale</h2>
+    <p id="exsub" style="color:var(--text2);font-size:1rem;max-width:560px;line-height:1.75;margin-top:14px; font-weight:500;">
+      Click on visual mockups to enlarge, or click <span style="color:var(--accent2);font-family:var(--mono);font-weight:700;">✦ AGI Summary</span> for an instant project breakdown.
+    </p>
+
+    <div class="exp-stack">
+
+      <div class="exp-card" id="e1">
+        <div class="exp-inner">
+          <div class="exp-body">
+            <div>
+              <div class="exp-meta-row">
+                <span class="exp-num">01</span>
+                <span class="exp-badge badge-blue"><i class="fa-solid fa-code"></i> Excel VBA · Real-Time</span>
+              </div>
+              <div class="exp-title">Real-Time Changeover Monitoring System</div>
+              <div class="exp-desc">
+                Built a real-time monitoring system entirely in Excel VBA that captures precise changeover timing, calculates live deviations, and triggers supervisor alerts the moment a line exceeds its target window. Zero external tools — pure VBA engineering.
+                <br><br>
+                Result: <strong>71% reduction in changeover downtime</strong>, eliminating approximately <strong>570 hours/week</strong> of non-value-added coordination time — equivalent to <b>20M+ additional production units annually</b>.
+              </div>
+              <div class="metrics">
+                <div class="metric"><i class="fa-solid fa-arrow-trend-down"></i> 71% Downtime Cut</div>
+                <div class="metric"><i class="fa-solid fa-clock"></i> 570 Hrs Saved / Week</div>
+                <div class="metric"><i class="fa-solid fa-boxes-stacking"></i> 20M+ Units / Year</div>
+              </div>
+            </div>
+            <button class="ai-btn" data-title="Real-Time Changeover Monitoring System">
+              <span class="spark">✦</span> AGI Summary
+            </button>
+          </div>
+          <div class="exp-visual lightbox-trigger">
+            <div class="dash-bar" style="position:absolute;top:0;left:0;right:0;z-index:3;background:rgba(10,15,30,.85);border-radius:0;backdrop-filter:blur(8px)">
+              <div class="db r"></div><div class="db y"></div><div class="db g"></div>
+              <span class="dash-title" style="font-family:var(--mono);font-size:.58rem;color:var(--text2);margin-left:6px">changeover_monitor.xlsm — LIVE</span>
+            </div>
+            <svg viewBox="0 0 380 260" xmlns="http://www.w3.org/2000/svg" style="position:absolute;inset:0;z-index:2;width:100%;height:100%;padding:32px 12px 12px">
+              <rect x="8" y="8" width="364" height="244" rx="8" fill="rgba(10,15,30,0.92)" stroke="rgba(56,189,248,0.15)" stroke-width="1"/>
+              <rect x="16" y="16" width="348" height="30" rx="4" fill="rgba(56,189,248,0.06)"/>
+              <text x="24" y="36" font-family="monospace" font-size="9" fill="#38BDF8">CHANGEOVER MONITOR</text>
+              <text x="280" y="36" font-family="monospace" font-size="8" fill="#27C93F">● LIVE</text>
+              <rect x="16" y="54" width="108" height="56" rx="6" fill="rgba(56,189,248,0.07)" stroke="rgba(56,189,248,0.2)" stroke-width="1"/>
+              <text x="24" y="72" font-family="monospace" font-size="7" fill="#64748B">CURRENT LINE</text>
+              <text x="24" y="90" font-family="monospace" font-size="16" font-weight="bold" fill="#F0F6FF">Line 04</text>
+              <rect x="132" y="54" width="108" height="56" rx="6" fill="rgba(251,191,36,0.07)" stroke="rgba(251,191,36,0.2)" stroke-width="1"/>
+              <text x="140" y="72" font-family="monospace" font-size="7" fill="#64748B">ELAPSED</text>
+              <text x="140" y="90" font-family="monospace" font-size="16" font-weight="bold" fill="#FBBF24">00:47:22</text>
+              <rect x="248" y="54" width="116" height="56" rx="6" fill="rgba(52,211,153,0.07)" stroke="rgba(52,211,153,0.2)" stroke-width="1"/>
+              <text x="256" y="72" font-family="monospace" font-size="7" fill="#64748B">TARGET</text>
+              <text x="256" y="90" font-family="monospace" font-size="16" font-weight="bold" fill="#34D399">01:00:00</text>
+              <rect x="16" y="120" width="348" height="10" rx="5" fill="rgba(56,189,248,0.08)"/>
+              <rect x="16" y="120" width="217" height="10" rx="5" fill="url(#prog)"/>
+              <defs>
+                <linearGradient id="prog" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%" stop-color="#34D399"/>
+                  <stop offset="100%" stop-color="#38BDF8"/>
+                </linearGradient>
+              </defs>
+              <text x="16" y="146" font-family="monospace" font-size="7.5" fill="#64748B">Progress: 78.7% — On Track</text>
+              <rect x="16" y="156" width="348" height="88" rx="6" fill="rgba(14,22,40,0.6)" stroke="rgba(56,189,248,0.08)" stroke-width="1"/>
+              <text x="24" y="172" font-family="monospace" font-size="7" fill="#38BDF8">LINE</text>
+              <text x="80" y="172" font-family="monospace" font-size="7" fill="#38BDF8">STATUS</text>
+              <text x="160" y="172" font-family="monospace" font-size="7" fill="#38BDF8">ELAPSED</text>
+              <text x="240" y="172" font-family="monospace" font-size="7" fill="#38BDF8">DEVIATION</text>
+              <line x1="16" y1="176" x2="356" y2="176" stroke="rgba(56,189,248,0.12)" stroke-width="1"/>
+              <text x="24" y="190" font-family="monospace" font-size="7.5" fill="#94A3B8">Line 01</text>
+              <rect x="78" y="182" width="40" height="12" rx="3" fill="rgba(52,211,153,0.15)"/>
+              <text x="80" y="191" font-family="monospace" font-size="6.5" fill="#34D399">DONE</text>
+              <text x="160" y="190" font-family="monospace" font-size="7.5" fill="#94A3B8">00:52:10</text>
+              <text x="240" y="190" font-family="monospace" font-size="7.5" fill="#34D399">-07:50</text>
+              <text x="24" y="207" font-family="monospace" font-size="7.5" fill="#94A3B8">Line 02</text>
+              <rect x="78" y="199" width="50" height="12" rx="3" fill="rgba(251,191,36,0.15)"/>
+              <text x="80" y="208" font-family="monospace" font-size="6.5" fill="#FBBF24">RUNNING</text>
+              <text x="160" y="207" font-family="monospace" font-size="7.5" fill="#94A3B8">01:05:33</text>
+              <text x="240" y="207" font-family="monospace" font-size="7.5" fill="#FBBF24">+05:33</text>
+              <text x="24" y="224" font-family="monospace" font-size="7.5" fill="#94A3B8">Line 03</text>
+              <rect x="78" y="216" width="44" height="12" rx="3" fill="rgba(239,68,68,0.15)"/>
+              <text x="80" y="225" font-family="monospace" font-size="6.5" fill="#EF4444">ALERT</text>
+              <text x="160" y="224" font-family="monospace" font-size="7.5" fill="#94A3B8">01:28:44</text>
+              <text x="240" y="224" font-family="monospace" font-size="7.5" fill="#EF4444">+28:44 ⚠</text>
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      <div class="exp-card" id="e2">
+        <div class="exp-inner">
+          <div class="exp-body">
+            <div>
+              <div class="exp-meta-row">
+                <span class="exp-num">02</span>
+                <span class="exp-badge badge-purple"><i class="fa-solid fa-chart-pie"></i> Power BI · SQL Server · ETL</span>
+              </div>
+              <div class="exp-title">Centralized Maintenance Analytics Platform</div>
+              <div class="exp-desc">
+                Designed and implemented a centralized <strong>Power BI platform</strong> with automated ETL pipelines, replacing fragmented Excel-based reporting. Integrated data from SQL Server, Power Query, and SharePoint.
+                <br><br>
+                The platform covers <strong>1,400+ machines across 80 equipment types</strong>, giving management a single real-time source of truth for all maintenance decisions.
+              </div>
+              <div class="metrics">
+                <div class="metric"><i class="fa-solid fa-industry"></i> 1,400+ Machines</div>
+                <div class="metric"><i class="fa-solid fa-layer-group"></i> 80 Equipment Types</div>
+                <div class="metric"><i class="fa-solid fa-database"></i> Auto ETL Pipelines</div>
+              </div>
+            </div>
+            <button class="ai-btn" data-title="Centralized Maintenance Analytics Platform">
+              <span class="spark">✦</span> AGI Summary
+            </button>
+          </div>
+          <div class="exp-visual lightbox-trigger">
+            <div class="dash-bar" style="position:absolute;top:0;left:0;right:0;z-index:3;background:rgba(10,15,30,.85);backdrop-filter:blur(8px)">
+              <div class="db r"></div><div class="db y"></div><div class="db g"></div>
+              <span class="dash-title" style="font-family:var(--mono);font-size:.58rem;color:var(--text2);margin-left:6px">maintenance_platform.pbix</span>
+            </div>
+            <svg viewBox="0 0 380 260" xmlns="http://www.w3.org/2000/svg" style="position:absolute;inset:0;z-index:2;width:100%;height:100%;padding:32px 12px 12px">
+              <rect x="8" y="8" width="364" height="244" rx="8" fill="rgba(10,15,30,0.92)" stroke="rgba(129,140,248,0.2)" stroke-width="1"/>
+              <text x="18" y="26" font-family="monospace" font-size="8.5" fill="#818CF8">MAINTENANCE ANALYTICS PLATFORM</text>
+              <text x="290" y="26" font-family="monospace" font-size="7" fill="#64748B">Auto-refresh: 5min</text>
+              <rect x="14" y="32" width="83" height="52" rx="5" fill="rgba(129,140,248,0.08)" stroke="rgba(129,140,248,0.18)" stroke-width="1"/>
+              <text x="21" y="48" font-family="monospace" font-size="6.5" fill="#64748B">MACHINES</text>
+              <text x="21" y="65" font-family="monospace" font-size="15" font-weight="bold" fill="#F0F6FF">1,400</text>
+              <text x="21" y="77" font-family="monospace" font-size="6" fill="#34D399">▲ 80 types</text>
+              <rect x="102" y="32" width="83" height="52" rx="5" fill="rgba(56,189,248,0.08)" stroke="rgba(56,189,248,0.18)" stroke-width="1"/>
+              <text x="109" y="48" font-family="monospace" font-size="6.5" fill="#64748B">UPTIME</text>
+              <text x="109" y="65" font-family="monospace" font-size="15" font-weight="bold" fill="#F0F6FF">94.7%</text>
+              <text x="109" y="77" font-family="monospace" font-size="6" fill="#34D399">▲ +2.1%</text>
+              <rect x="190" y="32" width="83" height="52" rx="5" fill="rgba(52,211,153,0.08)" stroke="rgba(52,211,153,0.18)" stroke-width="1"/>
+              <text x="197" y="48" font-family="monospace" font-size="6.5" fill="#64748B">MTBF</text>
+              <text x="197" y="65" font-family="monospace" font-size="15" font-weight="bold" fill="#F0F6FF">247h</text>
+              <text x="197" y="77" font-family="monospace" font-size="6" fill="#34D399">▲ target hit</text>
+              <rect x="278" y="32" width="90" height="52" rx="5" fill="rgba(251,191,36,0.08)" stroke="rgba(251,191,36,0.18)" stroke-width="1"/>
+              <text x="285" y="48" font-family="monospace" font-size="6.5" fill="#64748B">OPEN WOs</text>
+              <text x="285" y="65" font-family="monospace" font-size="15" font-weight="bold" fill="#F0F6FF">38</text>
+              <text x="285" y="77" font-family="monospace" font-size="6" fill="#FBBF24">▼ -12</text>
+              <text x="14" y="103" font-family="monospace" font-size="7" fill="#818CF8">Downtime by Equipment Type (hrs)</text>
+              <rect x="14" y="108" width="200" height="90" rx="5" fill="rgba(14,22,40,0.7)" stroke="rgba(56,189,248,0.08)" stroke-width="1"/>
+              <rect x="22" y="152" width="18" height="36" rx="2" fill="url(#b1)"/>
+              <rect x="46" y="138" width="18" height="50" rx="2" fill="url(#b1)" opacity=".8"/>
+              <rect x="70" y="160" width="18" height="28" rx="2" fill="url(#b1)" opacity=".65"/>
+              <rect x="94" y="145" width="18" height="43" rx="2" fill="url(#b1)" opacity=".5"/>
+              <rect x="118" y="155" width="18" height="33" rx="2" fill="url(#b1)" opacity=".7"/>
+              <rect x="142" y="168" width="18" height="20" rx="2" fill="url(#b1)" opacity=".4"/>
+              <rect x="166" y="148" width="18" height="40" rx="2" fill="url(#b1)" opacity=".6"/>
+              <text x="22" y="198" font-family="monospace" font-size="5.5" fill="#64748B">CNC</text>
+              <text x="46" y="198" font-family="monospace" font-size="5.5" fill="#64748B">Prss</text>
+              <text x="70" y="198" font-family="monospace" font-size="5.5" fill="#64748B">Inj</text>
+              <text x="94" y="198" font-family="monospace" font-size="5.5" fill="#64748B">Conv</text>
+              <text x="118" y="198" font-family="monospace" font-size="5.5" fill="#64748B">Pck</text>
+              <text x="142" y="198" font-family="monospace" font-size="5.5" fill="#64748B">Hvac</text>
+              <text x="166" y="198" font-family="monospace" font-size="5.5" fill="#64748B">Gen</text>
+              <defs>
+                <linearGradient id="b1" x1="0%" y1="0%" x2="0%" y2="100%">
+                  <stop offset="0%" stop-color="#818CF8"/>
+                  <stop offset="100%" stop-color="#38BDF8"/>
+                </linearGradient>
+              </defs>
+              <text x="222" y="103" font-family="monospace" font-size="7" fill="#818CF8">Status Split</text>
+              <circle cx="278" cy="152" r="40" fill="none" stroke="rgba(52,211,153,1)" stroke-width="12" stroke-dasharray="150 251" stroke-dashoffset="0" transform="rotate(-90 278 152)"/>
+              <circle cx="278" cy="152" r="40" fill="none" stroke="rgba(56,189,248,1)" stroke-width="12" stroke-dasharray="65 251" stroke-dashoffset="-150" transform="rotate(-90 278 152)"/>
+              <circle cx="278" cy="152" r="40" fill="none" stroke="rgba(251,191,36,1)" stroke-width="12" stroke-dasharray="36 251" stroke-dashoffset="-215" transform="rotate(-90 278 152)"/>
+              <text x="270" y="148" font-family="monospace" font-size="8" fill="#F0F6FF" font-weight="bold">94.7</text>
+              <text x="271" y="159" font-family="monospace" font-size="6" fill="#64748B">uptime</text>
+              <rect x="220" y="200" width="8" height="8" rx="2" fill="#34D399"/>
+              <text x="232" y="208" font-family="monospace" font-size="6.5" fill="#94A3B8">Running</text>
+              <rect x="270" y="200" width="8" height="8" rx="2" fill="#38BDF8"/>
+              <text x="282" y="208" font-family="monospace" font-size="6.5" fill="#94A3B8">PM</text>
+              <rect x="305" y="200" width="8" height="8" rx="2" fill="#FBBF24"/>
+              <text x="317" y="208" font-family="monospace" font-size="6.5" fill="#94A3B8">Down</text>
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      <div class="exp-card" id="e3">
+        <div class="exp-inner">
+          <div class="exp-body">
+            <div>
+              <div class="exp-meta-row">
+                <span class="exp-num">03</span>
+                <span class="exp-badge badge-green"><i class="fa-solid fa-gauge-high"></i> MTBF · MTTR · Power BI</span>
+              </div>
+              <div class="exp-title">MTBF &amp; MTTR KPI Dashboard System</div>
+              <div class="exp-desc">
+                Developed and maintained <strong>30+ Power BI dashboards</strong> and RCA tools, including MTBF and MTTR KPI dashboards.
+                <br><br>
+                Dashboards process <strong>60,000+ records annually</strong>, enabling faster decision-making for <strong>15+ users</strong>, and helping <b>5 of 7 maintenance teams meet or exceed a 5% quarterly improvement target</b>.
+              </div>
+              <div class="metrics">
+                <div class="metric"><i class="fa-solid fa-file-lines"></i> 60K+ Records / Year</div>
+                <div class="metric"><i class="fa-solid fa-chart-line"></i> 30+ Dashboards</div>
+                <div class="metric"><i class="fa-solid fa-users"></i> 15+ Users · 5/7 Teams</div>
+              </div>
+            </div>
+            <button class="ai-btn" data-title="MTBF &amp; MTTR KPI Dashboard System">
+              <span class="spark">✦</span> AGI Summary
+            </button>
+          </div>
+          <div class="exp-visual lightbox-trigger">
+            <div class="dash-bar" style="position:absolute;top:0;left:0;right:0;z-index:3;background:rgba(10,15,30,.85);backdrop-filter:blur(8px)">
+              <div class="db r"></div><div class="db y"></div><div class="db g"></div>
+              <span class="dash-title" style="font-family:var(--mono);font-size:.58rem;color:var(--text2);margin-left:6px">mtbf_mttr_kpi.pbix — Q4 2024</span>
+            </div>
+            <svg viewBox="0 0 380 260" xmlns="http://www.w3.org/2000/svg" style="position:absolute;inset:0;z-index:2;width:100%;height:100%;padding:32px 12px 12px">
+              <rect x="8" y="8" width="364" height="244" rx="8" fill="rgba(10,15,30,0.92)" stroke="rgba(52,211,153,0.2)" stroke-width="1"/>
+              <text x="18" y="26" font-family="monospace" font-size="8.5" fill="#34D399">RELIABILITY KPI DASHBOARD</text>
+              <text x="295" y="26" font-family="monospace" font-size="7" fill="#64748B">Q4 · 60K Records</text>
+              <text x="14" y="50" font-family="monospace" font-size="7" fill="#34D399">MTBF Trend (hrs) — All Teams</text>
+              <rect x="14" y="54" width="218" height="90" rx="5" fill="rgba(14,22,40,0.7)" stroke="rgba(52,211,153,0.1)" stroke-width="1"/>
+              <line x1="14" y1="84" x2="232" y2="84" stroke="rgba(52,211,153,0.06)" stroke-width="1"/>
+              <line x1="14" y1="104" x2="232" y2="104" stroke="rgba(52,211,153,0.06)" stroke-width="1"/>
+              <line x1="14" y1="124" x2="232" y2="124" stroke="rgba(52,211,153,0.06)" stroke-width="1"/>
+              <polyline points="22,130 52,120 82,108 112,115 142,98 172,88 202,78" fill="none" stroke="url(#lgrad)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+              <polyline points="22,130 52,120 82,108 112,115 142,98 172,88 202,78" fill="url(#lfill)" stroke="none" opacity="0.15"/>
+              <defs>
+                <linearGradient id="lgrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%" stop-color="#34D399"/>
+                  <stop offset="100%" stop-color="#38BDF8"/>
+                </linearGradient>
+                <linearGradient id="lfill" x1="0%" y1="0%" x2="0%" y2="100%">
+                  <stop offset="0%" stop-color="#34D399" stop-opacity="0.4"/>
+                  <stop offset="100%" stop-color="#34D399" stop-opacity="0"/>
+                </linearGradient>
+              </defs>
+              <text x="22" y="144" font-family="monospace" font-size="5.5" fill="#64748B">Jan</text>
+              <text x="52" y="144" font-family="monospace" font-size="5.5" fill="#64748B">Feb</text>
+              <text x="82" y="144" font-family="monospace" font-size="5.5" fill="#64748B">Mar</text>
+              <text x="112" y="144" font-family="monospace" font-size="5.5" fill="#64748B">Apr</text>
+              <text x="142" y="144" font-family="monospace" font-size="5.5" fill="#64748B">May</text>
+              <text x="172" y="144" font-family="monospace" font-size="5.5" fill="#64748B">Jun</text>
+              <text x="202" y="144" font-family="monospace" font-size="5.5" fill="#64748B">Jul</text>
+              <text x="240" y="50" font-family="monospace" font-size="7" fill="#34D399">Team Performance</text>
+              <rect x="238" y="54" width="130" height="16" rx="3" fill="rgba(52,211,153,0.12)"/><text x="244" y="65" font-family="monospace" font-size="7" fill="#34D399">Team A ✓</text><text x="330" y="65" font-family="monospace" font-size="7" fill="#34D399">+8.2%</text>
+              <rect x="238" y="73" width="130" height="16" rx="3" fill="rgba(52,211,153,0.12)"/><text x="244" y="84" font-family="monospace" font-size="7" fill="#34D399">Team B ✓</text><text x="330" y="84" font-family="monospace" font-size="7" fill="#34D399">+6.1%</text>
+              <rect x="238" y="92" width="130" height="16" rx="3" fill="rgba(52,211,153,0.12)"/><text x="244" y="103" font-family="monospace" font-size="7" fill="#34D399">Team C ✓</text><text x="330" y="103" font-family="monospace" font-size="7" fill="#34D399">+5.7%</text>
+              <rect x="238" y="111" width="130" height="16" rx="3" fill="rgba(52,211,153,0.12)"/><text x="244" y="122" font-family="monospace" font-size="7" fill="#34D399">Team D ✓</text><text x="330" y="122" font-family="monospace" font-size="7" fill="#34D399">+5.3%</text>
+              <rect x="238" y="130" width="130" height="16" rx="3" fill="rgba(52,211,153,0.12)"/><text x="244" y="141" font-family="monospace" font-size="7" fill="#34D399">Team E ✓</text><text x="330" y="141" font-family="monospace" font-size="7" fill="#34D399">+5.0%</text>
+              <rect x="238" y="149" width="130" height="16" rx="3" fill="rgba(251,191,36,0.08)"/><text x="244" y="160" font-family="monospace" font-size="7" fill="#FBBF24">Team F  –</text><text x="330" y="160" font-family="monospace" font-size="7" fill="#FBBF24">+3.2%</text>
+              <rect x="238" y="168" width="130" height="16" rx="3" fill="rgba(239,68,68,0.08)"/><text x="244" y="179" font-family="monospace" font-size="7" fill="#EF4444">Team G  ✗</text><text x="330" y="179" font-family="monospace" font-size="7" fill="#EF4444">+1.8%</text>
+              <rect x="14" y="152" width="218" height="44" rx="5" fill="rgba(14,22,40,0.7)" stroke="rgba(52,211,153,0.1)" stroke-width="1"/>
+              <text x="22" y="167" font-family="monospace" font-size="7" fill="#64748B">MTTR Avg</text><text x="90" y="167" font-family="monospace" font-size="10" font-weight="bold" fill="#F0F6FF">2.4 hrs</text>
+              <text x="160" y="167" font-family="monospace" font-size="7" fill="#64748B">MTBF</text><text x="195" y="167" font-family="monospace" font-size="10" font-weight="bold" fill="#F0F6FF">247 hrs</text>
+              <text x="22" y="187" font-family="monospace" font-size="7" fill="#34D399">5/7 teams on target (>5% improvement)</text>
+              <rect x="14" y="200" width="352" height="30" rx="5" fill="rgba(56,189,248,0.04)" stroke="rgba(56,189,248,0.08)" stroke-width="1"/>
+              <text x="22" y="219" font-family="monospace" font-size="7" fill="#38BDF8">60,247 records processed · 15 active users · 30+ dashboards deployed · Auto-refresh ON</text>
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      <div class="exp-card" id="e4">
+        <div class="exp-inner">
+          <div class="exp-body">
+            <div>
+              <div class="exp-meta-row">
+                <span class="exp-num">04</span>
+                <span class="exp-badge badge-amber"><i class="fa-solid fa-mobile-screen"></i> Power Apps · Automate</span>
+              </div>
+              <div class="exp-title">Spare Parts Workflow Mobile App</div>
+              <div class="exp-desc">
+                Automated spare parts request workflows using <strong>Power Apps and Power Automate</strong>, including multi-level approval routing and real-time Microsoft Teams notifications.
+                <br><br>
+                Impact: <b>reducing technician waiting time by 4,000–5,000 minutes per year</b>. Significantly faster maintenance response — fully mobile-first design.
+              </div>
+              <div class="metrics">
+                <div class="metric"><i class="fa-solid fa-hourglass-half"></i> 4K–5K Min Saved / Year</div>
+                <div class="metric"><i class="fa-solid fa-mobile"></i> Mobile First</div>
+                <div class="metric"><i class="fa-brands fa-microsoft"></i> Teams Integrated</div>
+              </div>
+            </div>
+            <button class="ai-btn" data-title="Spare Parts Workflow Mobile App">
+              <span class="spark">✦</span> AGI Summary
+            </button>
+          </div>
+          <div class="exp-visual lightbox-trigger">
+            <div class="dash-bar" style="position:absolute;top:0;left:0;right:0;z-index:3;background:rgba(10,15,30,.85);backdrop-filter:blur(8px)">
+              <div class="db r"></div><div class="db y"></div><div class="db g"></div>
+              <span class="dash-title" style="font-family:var(--mono);font-size:.58rem;color:var(--text2);margin-left:6px">SparePartsApp — Power Apps</span>
+            </div>
+            <svg viewBox="0 0 380 260" xmlns="http://www.w3.org/2000/svg" style="position:absolute;inset:0;z-index:2;width:100%;height:100%;padding:32px 12px 12px">
+              <rect x="8" y="8" width="364" height="244" rx="8" fill="rgba(10,15,30,0.92)" stroke="rgba(251,191,36,0.2)" stroke-width="1"/>
+              <rect x="18" y="12" width="115" height="232" rx="14" fill="rgba(14,22,40,0.9)" stroke="rgba(251,191,36,0.25)" stroke-width="1.5"/>
+              <rect x="22" y="30" width="107" height="208" rx="10" fill="rgba(20,32,58,0.9)"/>
+              <rect x="22" y="30" width="107" height="28" rx="10" fill="rgba(251,191,36,0.12)"/>
+              <text x="30" y="48" font-family="monospace" font-size="7.5" fill="#FBBF24" font-weight="bold">Spare Parts</text>
+              <text x="100" y="48" font-family="monospace" font-size="7" fill="#64748B">🔔</text>
+              <rect x="26" y="62" width="99" height="36" rx="6" fill="rgba(52,211,153,0.1)" stroke="rgba(52,211,153,0.2)" stroke-width="1"/>
+              <text x="32" y="74" font-family="monospace" font-size="6" fill="#34D399">REQ #2041</text>
+              <text x="32" y="85" font-family="monospace" font-size="6.5" fill="#F0F6FF" font-weight="bold">Bearing 6205</text>
+              <text x="32" y="94" font-family="monospace" font-size="5.5" fill="#64748B">Approved ✓ · 08:22</text>
+              <rect x="26" y="102" width="99" height="36" rx="6" fill="rgba(251,191,36,0.1)" stroke="rgba(251,191,36,0.2)" stroke-width="1"/>
+              <text x="32" y="114" font-family="monospace" font-size="6" fill="#FBBF24">REQ #2042</text>
+              <text x="32" y="125" font-family="monospace" font-size="6.5" fill="#F0F6FF" font-weight="bold">V-Belt B68</text>
+              <text x="32" y="134" font-family="monospace" font-size="5.5" fill="#64748B">Pending · Eng. review</text>
+              <rect x="26" y="142" width="99" height="36" rx="6" fill="rgba(56,189,248,0.1)" stroke="rgba(56,189,248,0.15)" stroke-width="1"/>
+              <text x="32" y="154" font-family="monospace" font-size="6" fill="#38BDF8">REQ #2043</text>
+              <text x="32" y="165" font-family="monospace" font-size="6.5" fill="#F0F6FF" font-weight="bold">Oil Filter C12</text>
+              <text x="32" y="174" font-family="monospace" font-size="5.5" fill="#64748B">In Transit · ETA 2h</text>
+              <rect x="82" y="222" width="38" height="14" rx="7" fill="rgba(251,191,36,0.9)"/>
+              <text x="95" y="232" font-family="monospace" font-size="7" fill="#0A0F1E" font-weight="bold">+ New</text>
+              <text x="148" y="28" font-family="monospace" font-size="7.5" fill="#FBBF24">Approval Workflow (Power Automate)</text>
+              <rect x="148" y="36" width="100" height="22" rx="5" fill="rgba(56,189,248,0.1)" stroke="rgba(56,189,248,0.2)" stroke-width="1"/>
+              <text x="160" y="51" font-family="monospace" font-size="7" fill="#38BDF8">📱 Technician Request</text>
+              <line x1="198" y1="58" x2="198" y2="70" stroke="rgba(251,191,36,0.5)" stroke-width="1.5" stroke-dasharray="3,2"/>
+              <rect x="148" y="70" width="100" height="22" rx="5" fill="rgba(129,140,248,0.1)" stroke="rgba(129,140,248,0.2)" stroke-width="1"/>
+              <text x="163" y="85" font-family="monospace" font-size="7" fill="#818CF8">⚡ Auto Route</text>
+              <line x1="198" y1="92" x2="198" y2="104" stroke="rgba(251,191,36,0.5)" stroke-width="1.5" stroke-dasharray="3,2"/>
+              <rect x="148" y="104" width="100" height="22" rx="5" fill="rgba(52,211,153,0.1)" stroke="rgba(52,211,153,0.2)" stroke-width="1"/>
+              <text x="162" y="119" font-family="monospace" font-size="7" fill="#34D399">✅ Supervisor Approve</text>
+              <line x1="198" y1="126" x2="198" y2="138" stroke="rgba(251,191,36,0.5)" stroke-width="1.5" stroke-dasharray="3,2"/>
+              <rect x="148" y="138" width="100" height="22" rx="5" fill="rgba(251,191,36,0.1)" stroke="rgba(251,191,36,0.2)" stroke-width="1"/>
+              <text x="162" y="153" font-family="monospace" font-size="7" fill="#FBBF24">🔔 Teams Notify</text>
+              <line x1="198" y1="160" x2="198" y2="172" stroke="rgba(251,191,36,0.5)" stroke-width="1.5" stroke-dasharray="3,2"/>
+              <rect x="148" y="172" width="100" height="22" rx="5" fill="rgba(56,189,248,0.1)" stroke="rgba(56,189,248,0.2)" stroke-width="1"/>
+              <text x="165" y="187" font-family="monospace" font-size="7" fill="#38BDF8">📦 Dispatch Parts</text>
+              <rect x="258" y="36" width="110" height="80" rx="8" fill="rgba(251,191,36,0.06)" stroke="rgba(251,191,36,0.15)" stroke-width="1"/>
+              <text x="268" y="54" font-family="monospace" font-size="7" fill="#64748B">TIME SAVED</text>
+              <text x="268" y="72" font-family="monospace" font-size="18" font-weight="bold" fill="#FBBF24">5K</text>
+              <text x="301" y="72" font-family="monospace" font-size="9" fill="#64748B"> min</text>
+              <text x="268" y="86" font-family="monospace" font-size="6.5" fill="#64748B">per year</text>
+              <text x="268" y="98" font-family="monospace" font-size="6" fill="#34D399">✓ Mobile First</text>
+              <rect x="258" y="124" width="110" height="90" rx="8" fill="rgba(14,22,40,0.9)" stroke="rgba(129,140,248,0.2)" stroke-width="1"/>
+              <rect x="258" y="124" width="110" height="20" rx="8" fill="rgba(129,140,248,0.1)"/>
+              <text x="266" y="138" font-family="monospace" font-size="7" fill="#818CF8">Microsoft Teams</text>
+              <text x="266" y="156" font-family="monospace" font-size="6" fill="#F0F6FF">New spare part request</text>
+              <text x="266" y="168" font-family="monospace" font-size="5.5" fill="#64748B">REQ #2044 · Bearing 6205</text>
+              <text x="266" y="179" font-family="monospace" font-size="5.5" fill="#64748B">Line 06 · Urgent</text>
+              <rect x="266" y="183" width="38" height="12" rx="4" fill="rgba(52,211,153,0.2)"/>
+              <text x="272" y="192" font-family="monospace" font-size="6" fill="#34D399">Approve</text>
+              <rect x="308" y="183" width="34" height="12" rx="4" fill="rgba(239,68,68,0.15)"/>
+              <text x="315" y="192" font-family="monospace" font-size="6" fill="#EF4444">Reject</text>
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      <div class="exp-card" id="e5">
+        <div class="exp-inner">
+          <div class="exp-body">
+            <div>
+              <div class="exp-meta-row">
+                <span class="exp-num">05</span>
+                <span class="exp-badge badge-blue"><i class="fa-solid fa-camera"></i> Power Apps · Visual Inspection</span>
+              </div>
+              <div class="exp-title">Visual Inspection App for Preventive Maintenance</div>
+              <div class="exp-desc">
+                Developed a visual inspection application in <strong>Power Apps</strong> to digitize preventive maintenance processes and enable earlier defect detection.
+                <br><br>
+                Technicians can perform inspections on mobile devices, capture photos, log findings, and trigger alerts — replacing paper-based checklists entirely and enabling <b>faster response to early-stage equipment issues</b>.
+              </div>
+              <div class="metrics">
+                <div class="metric"><i class="fa-solid fa-mobile-screen-button"></i> Mobile Inspection</div>
+                <div class="metric"><i class="fa-solid fa-camera"></i> Photo Evidence</div>
+                <div class="metric"><i class="fa-solid fa-triangle-exclamation"></i> Early Defect Detection</div>
+              </div>
+            </div>
+            <button class="ai-btn" data-title="Visual Inspection App for Preventive Maintenance">
+              <span class="spark">✦</span> AGI Summary
+            </button>
+          </div>
+          <div class="exp-visual lightbox-trigger">
+            <div class="dash-bar" style="position:absolute;top:0;left:0;right:0;z-index:3;background:rgba(10,15,30,.85);backdrop-filter:blur(8px)">
+              <div class="db r"></div><div class="db y"></div><div class="db g"></div>
+              <span class="dash-title" style="font-family:var(--mono);font-size:.58rem;color:var(--text2);margin-left:6px">visual_inspection.app — Power Apps</span>
+            </div>
+            <img src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=1200&auto=format&fit=crop" alt="Inspection app in factory" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.4;z-index:1"/>
+            <svg viewBox="0 0 380 260" xmlns="http://www.w3.org/2000/svg" style="position:absolute;inset:0;z-index:2;width:100%;height:100%;padding:32px 12px 12px">
+              <rect x="130" y="10" width="130" height="232" rx="18" fill="rgba(10,15,30,0.95)" stroke="rgba(56,189,248,0.3)" stroke-width="1.5"/>
+              <rect x="134" y="28" width="122" height="208" rx="12" fill="rgba(14,22,40,0.98)"/>
+              <rect x="134" y="28" width="122" height="32" rx="12" fill="rgba(56,189,248,0.08)"/>
+              <text x="152" y="48" font-family="monospace" font-size="8" fill="#38BDF8" font-weight="bold">PM Inspection</text>
+              <text x="236" y="48" font-family="monospace" font-size="8" fill="#34D399">●</text>
+              <rect x="138" y="64" width="114" height="14" rx="3" fill="rgba(52,211,153,0.1)"/>
+              <text x="143" y="74" font-family="monospace" font-size="6.5" fill="#34D399">☑ Oil Level — Normal</text>
+              <rect x="138" y="82" width="114" height="14" rx="3" fill="rgba(52,211,153,0.1)"/>
+              <text x="143" y="92" font-family="monospace" font-size="6.5" fill="#34D399">☑ Belt Tension — OK</text>
+              <rect x="138" y="100" width="114" height="14" rx="3" fill="rgba(251,191,36,0.1)"/>
+              <text x="143" y="110" font-family="monospace" font-size="6.5" fill="#FBBF24">⚠ Vibration — Elevated</text>
+              <rect x="138" y="118" width="114" height="14" rx="3" fill="rgba(56,189,248,0.08)"/>
+              <text x="143" y="128" font-family="monospace" font-size="6.5" fill="#64748B">☐ Filter Condition</text>
+              <rect x="148" y="138" width="94" height="30" rx="8" fill="rgba(56,189,248,0.15)" stroke="rgba(56,189,248,0.3)" stroke-width="1"/>
+              <text x="173" y="157" font-family="monospace" font-size="8" fill="#38BDF8">📷 Capture</text>
+              <rect x="138" y="174" width="114" height="36" rx="6" fill="rgba(251,191,36,0.1)" stroke="rgba(251,191,36,0.3)" stroke-width="1"/>
+              <text x="145" y="188" font-family="monospace" font-size="6.5" fill="#FBBF24">⚠ ALERT TRIGGERED</text>
+              <text x="145" y="200" font-family="monospace" font-size="5.5" fill="#94A3B8">Vibration anomaly detected</text>
+              <text x="145" y="210" font-family="monospace" font-size="5.5" fill="#34D399">→ Work order auto-created</text>
+              <rect x="148" y="214" width="94" height="18" rx="8" fill="rgba(56,189,248,0.9)"/>
+              <text x="172" y="226" font-family="monospace" font-size="7.5" fill="#0A0F1E" font-weight="bold">Submit Report</text>
+            </svg>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="inner">
+    <div class="contact-inner" id="ctablk">
+      <span class="sec-label" style="display:block;margin-bottom:12px">// 04 — Contact</span>
+      <h2>Ready to <span style="background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent">Transform</span><br/>Your Operations?</h2>
+      <p>Whether you need a Power BI analytics platform, a maintenance automation strategy, or a hands-on technical collaborator — let's build something impactful together.</p>
+      <div class="contact-btns">
+        <a href="mailto:thanattikhuntahat@gmail.com" class="btn-p"><i class="fa-regular fa-envelope"></i> thanattikhuntahat@gmail.com</a>
+        <a href="tel:0653535451" class="btn-g"><i class="fa-solid fa-phone"></i> 065 353 5451</a>
+      </div>
+      <div class="contact-chips">
+        <div class="chip">
+          <div class="chip-label">Location</div>
+          <div class="chip-val">Bangkok, Thailand</div>
+        </div>
+        <div class="chip">
+          <div class="chip-label">Current Role</div>
+          <div class="chip-val">Mattel · 2024–Present</div>
+        </div>
+        <div class="chip">
+          <div class="chip-label">Degree</div>
+          <div class="chip-val">B.Eng. EEE · Kasetsart</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="foot-inner">
+    <div class="foot-logo">
+      THANUTTI_<span class="agi">AGI</span>
+    </div>
+    <p class="foot-copy">© 2026 · Digital Transformation & Data Analytics Engineer · Bangkok</p>
+    <div class="foot-links">
+      <a href="mailto:thanattikhuntahat@gmail.com" class="foot-link" title="Email"><i class="fa-regular fa-envelope"></i></a>
+      <a href="tel:0653535451" class="foot-link" title="Phone"><i class="fa-solid fa-phone"></i></a>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  'use strict';
+  gsap.registerPlugin(ScrollTrigger);
+
+  /* Nav scroll */
+  window.addEventListener('scroll',()=>{
+    document.getElementById('topnav').classList.toggle('scrolled',window.scrollY>60)
+  });
+
+  /* Mobile menu */
+  document.getElementById('hamburger').addEventListener('click',()=>document.getElementById('mobile-menu').classList.add('open'));
+  document.getElementById('close-btn').addEventListener('click',()=>document.getElementById('mobile-menu').classList.remove('open'));
+  document.querySelectorAll('.m-link').forEach(l=>l.addEventListener('click',()=>document.getElementById('mobile-menu').classList.remove('open')));
+
+  /* Hero animations */
+  gsap.set(['#hleft','#hterm','#hscroll'],{opacity:0});
+  gsap.set('#hleft',{y:30});
+  gsap.set('#hterm',{x:40});
+  const tlH=gsap.timeline({delay:.2});
+  tlH.to('#hleft',{opacity:1,y:0,duration:1,ease:'power3.out'})
+     .to('#hterm',{opacity:1,x:0,duration:.9,ease:'power3.out'},'-=.6')
+     .to('#hscroll',{opacity:1,duration:.5},'-=.2');
+
+  /* Scroll reveals */
+  function fadeUp(id,trigId,delay){
+    const el=document.getElementById(id); if(!el) return;
+    const trig=trigId?document.getElementById(trigId):el;
+    gsap.set(el,{opacity:0,y:36});
+    gsap.to(el,{opacity:1,y:0,duration:.8,delay:delay||0,ease:'power3.out',
+      scrollTrigger:{trigger:trig,start:'top 87%',toggleActions:'play reverse play reverse'}});
+  }
+  function fadeLeft(id,trigId,delay){
+    const el=document.getElementById(id); if(!el) return;
+    gsap.set(el,{opacity:0,x:-40});
+    gsap.to(el,{opacity:1,x:0,duration:.8,delay:delay||0,ease:'power3.out',
+      scrollTrigger:{trigger:document.getElementById(trigId)||el,start:'top 85%',toggleActions:'play reverse play reverse'}});
+  }
+  function fadeRight(id,trigId,delay){
+    const el=document.getElementById(id); if(!el) return;
+    gsap.set(el,{opacity:0,x:40});
+    gsap.to(el,{opacity:1,x:0,duration:.8,delay:delay||0,ease:'power3.out',
+      scrollTrigger:{trigger:document.getElementById(trigId)||el,start:'top 85%',toggleActions:'play reverse play reverse'}});
+  }
+
+  fadeLeft('ableft','about',0);
+  fadeRight('abright','about',0.1);
+  fadeUp('abtags','about',0.2);
+  fadeUp('skills-block','about',0.3);
+
+  fadeUp('edlbl','education',0); fadeUp('edh','education',0.1);
+  fadeUp('edgrid','education',0.2);
+
+  fadeUp('exlbl','experience',0); fadeUp('exh','experience',0.1); fadeUp('exsub','experience',0.2);
+  ['e1','e2','e3','e4','e5'].forEach((id,i)=>{
+    const el=document.getElementById(id); if(!el) return;
+    gsap.set(el,{opacity:0,y:50});
+    gsap.to(el,{opacity:1,y:0,duration:.9,ease:'power3.out',
+      scrollTrigger:{trigger:el,start:'top 87%',toggleActions:'play reverse play reverse'}});
+  });
+
+  fadeUp('ctablk','contact',0);
+
+  /* ── LIGHTBOX ZOOM FUNCTION ── */
+  const lightboxOverlay = document.getElementById('lightbox-overlay');
+  const lightboxContent = document.getElementById('lightbox-content');
+  const lightboxClose = document.getElementById('lightbox-close');
+
+  document.querySelectorAll('.lightbox-trigger').forEach(el => {
+    el.addEventListener('click', () => {
+      lightboxContent.innerHTML = el.innerHTML;
+      lightboxOverlay.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    });
+  });
+
+  const closeLightbox = () => {
+    lightboxOverlay.classList.remove('open');
+    document.body.style.overflow = '';
+    setTimeout(() => { lightboxContent.innerHTML = ''; }, 300); // Clear after animation
+  };
+
+  lightboxClose.addEventListener('click', closeLightbox);
+  lightboxOverlay.addEventListener('click', e => { if (e.target === lightboxOverlay) closeLightbox(); });
+
+  /* ── AI MODAL (ENGLISH ONLY, RELIABLE MULTI-BLOCK STREAMING) ── */
+  const overlay=document.getElementById('ai-overlay');
+  const modalTitle=document.getElementById('modal-title');
+  const modalBody=document.getElementById('modal-body');
+  
+  let currentProjectTitle = '';
+  let streamId = 0;
+
+  // Project Summaries Structured Array (English Only)
+  const agiSummaries = {
+    "Real-Time Changeover Monitoring System": [
+      "A real-time machine changeover tracking system built entirely in Excel VBA without external dependencies.",
+      "• Captured precise live timing from production lines.\n• Built automatic deviation calculations.\n• Implemented automated supervisor alerts for target breaches.",
+      "71% reduction in downtime, saving 570 hours/week, equal to 20M+ additional units annually."
+    ],
+    "Centralized Maintenance Analytics Platform": [
+      "A unified Power BI analytics platform replacing fragmented Excel reports.",
+      "• Designed automated ETL pipelines from SQL Server and SharePoint.\n• Transformed and modeled data covering 80 equipment types.",
+      "Monitored 1,400+ machines, giving management a single real-time source of truth."
+    ],
+    "MTBF & MTTR KPI Dashboard System": [
+      "A suite of 30+ Power BI dashboards focusing on MTBF and MTTR KPIs.",
+      "• Processed and visualized over 60,000 maintenance records annually.\n• Developed Root Cause Analysis (RCA) tools for 15+ users.",
+      "Helped 5 out of 7 maintenance teams consistently beat their 5% quarterly reliability target."
+    ],
+    "Spare Parts Workflow Mobile App": [
+      "A mobile-first Power Apps application for automated spare parts workflows.",
+      "• Digitized the entire paper-based request and approval process.\n• Built multi-level routing with real-time MS Teams push notifications.",
+      "Eliminated 4,000–5,000 minutes of technician waiting time every single year."
+    ],
+    "Visual Inspection App for Preventive Maintenance": [
+      "A mobile visual inspection tool in Power Apps to digitize preventive maintenance.",
+      "• Replaced paper checklists with structured mobile data entry.\n• Implemented photo capture and timestamped equipment condition logs.",
+      "Enabled early defect detection, proactively preventing major equipment breakdowns."
+    ]
+  };
+
+  // Section Headers
+  const sectionLabels = ['What is this project?', 'What I did', 'The Result'];
+
+  function openModal(title){
+    currentProjectTitle = title;
+    modalTitle.textContent = title;
+    overlay.classList.add('open');
+    document.body.style.overflow = 'hidden';
+    startFakeStream();
+  }
+
+  function closeModal(){
+    overlay.classList.remove('open');
+    document.body.style.overflow = '';
+    streamId++; // Cancel active stream
+  }
+
+  document.getElementById('modal-x').addEventListener('click',closeModal);
+  document.getElementById('modal-close').addEventListener('click',closeModal);
+  overlay.addEventListener('click',e=>{
+    // For mobile bottom sheet, click outside to close
+    if(e.target===overlay) closeModal();
+  });
+  document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal()});
+
+  document.querySelectorAll('.ai-btn').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      openModal(btn.dataset.title);
+    });
+  });
+
+  async function startFakeStream(){
+    const myStreamId = ++streamId;
+    
+    // Initial loading shimmer
+    modalBody.innerHTML='<div class="shimmer-line"></div><div class="shimmer-line"></div><div class="shimmer-line"></div>';
+    
+    const contentArray = agiSummaries[currentProjectTitle] || ["Summary not found.", "", ""];
+    
+    // Simulate AI thinking delay
+    await new Promise(r => setTimeout(r, 400));
+    if (streamId !== myStreamId) return;
+
+    // Clear shimmers
+    modalBody.innerHTML = '';
+
+    // Build the blocks one by one using insertAdjacentHTML so we don't wipe previous innerHTML
+    for(let i = 0; i < 3; i++) {
+      if (streamId !== myStreamId) return;
+      if (!contentArray[i]) continue;
+
+      const textId = `text-block-${i}`;
+      const blockHTML = `
+        <div class="s-block">
+          <div class="s-label">${sectionLabels[i]}</div>
+          <div class="s-text" id="${textId}"></div>
+        </div>
+      `;
+      modalBody.insertAdjacentHTML('beforeend', blockHTML);
+      
+      const textContainer = document.getElementById(textId);
+      let currentText = '';
+      let targetText = contentArray[i];
+      
+      for(let c = 0; c < targetText.length; c++) {
+        if (streamId !== myStreamId) return;
+        currentText += targetText[c];
+        
+        let formatted = currentText.split('\n').map(line => {
+          let t = line.trim();
+          if(!t) return '';
+          if(t.startsWith('•')){
+            return `<div style="padding-left:16px;position:relative;margin-bottom:6px"><span style="position:absolute;left:0;color:var(--accent)">›</span>${t.substring(1).trim()}</div>`;
+          }
+          return `<div style="margin-bottom:6px">${t}</div>`;
+        }).join('');
+        
+        textContainer.innerHTML = formatted + '<span class="t-blink"></span>';
+        await new Promise(r => setTimeout(r, Math.random() * 5 + 5)); // Typing speed
+      }
+      
+      // Remove cursor from this block
+      let finalFormatted = targetText.split('\n').map(line => {
+        let t = line.trim();
+        if(!t) return '';
+        if(t.startsWith('•')){
+          return `<div style="padding-left:16px;position:relative;margin-bottom:6px"><span style="position:absolute;left:0;color:var(--accent)">›</span>${t.substring(1).trim()}</div>`;
+        }
+        return `<div style="margin-bottom:6px">${t}</div>`;
+      }).join('');
+      textContainer.innerHTML = finalFormatted;
+    }
+  }
+
+})();
+</script>
+</body>
+</html>
